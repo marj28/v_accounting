@@ -186,7 +186,7 @@ $chartofaccounts = $stmt->fetchAll();
   <select name="particular" id="particulars" class="custom-select" onchange="checkjournalInput()">
     <option value="" disabled selected>Select Account</option>
     <?php foreach ($chartofaccounts as $value): ?>
-    <option value="<?php echo $value['accountNumber'] ?>"><?php echo $value['accountNumber']. " ".$value['accountName']  ?> </option>
+    <option value="<?php echo $value['accountnumber'] ?>"><?php echo $value['accountnumber']. " ".$value['accountname']  ?> </option>
     <?php endforeach ?>
   </select>
 </div>
@@ -335,7 +335,7 @@ $("#InsertJourn").click(function(e){
   <select name="ledgePart" id="ledgePart" class="custom-select" onchange="checkLedgerInput()">
     <option value="" disabled selected>Select Account</option>
     <?php foreach ($chartofaccounts as $value): ?>
-    <option value="<?php echo $value['accountNumber'] ?>"><?php echo $value['accountNumber']. " ".$value['accountName']  ?> </option>
+    <option value="<?php echo $value['accountnumber'] ?>"><?php echo $value['accountnumber']. " ".$value['accountname']  ?> </option>
     <?php endforeach ?>
   </select>
 </div>

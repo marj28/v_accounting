@@ -142,27 +142,26 @@ $stmt = connect()->prepare("SELECT *  FROM chartofaccounts");
 $stmt->execute();
 $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
 $result = $stmt->fetchAll(); 
-print_r($result);
 ?>
                       <?php foreach ($result as $value): ?>
-                      <tr id="chart<?php echo $value['accountNumber'] ?>">
+                      <tr id="chart<?php echo $value['accountnumber'] ?>">
                         <td>
-                          <?php echo $value['accountNumber'] ?>
+                          <?php echo $value['accountnumber'] ?>
                         </td>
                         <td>
-                          <?php echo $value['accountName'] ?>
+                          <?php echo $value['accountname'] ?>
                         </td>
                         <td>
-                          <?php echo $value['accountType'] ?>
+                          <?php echo $value['accounttype'] ?>
                         </td>
                         <td class="text-right">
-                          <?php echo $value['accountDescription'] ?>
+                          <?php echo $value['accountdescription'] ?>
                         </td>
                         <td class="text-center">
                           <button class="btn btn-danger" 
-                          onclick="deleteAccount('<?php echo $value['accountNumber'] ?>')">Delete</button>
+                          onclick="deleteAccount('<?php echo $value['accountnumber'] ?>')">Delete</button>
 
-                          <button class="btn btn-sucess" onclick="editchart(<?php echo $value['accountNumber'] ?>)">Edit</button>
+                          <button class="btn btn-sucess" onclick="editchart(<?php echo $value['accountnumber'] ?>)">Edit</button>
                         </td>
                       </tr>
                     <?php endforeach ?>
