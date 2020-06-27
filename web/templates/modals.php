@@ -383,20 +383,38 @@ $("#InsertJourn").click(function(e){
 
 
   $("#selectLedger").click(function(e){
-  e.stopPropagation();
+    e.stopPropagation();
+
   var startDate = $("#startDate").val();
   var endDate = $("#endDate").val();
   var ledgePart = $("#ledgePart").val();
-  var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-      var response = this.responseText;
+    $.ajax({
+      url: '../backend/selecteLedger.php',
+      type: 'GET',
+      data: {number: ledgePart,startDate: startDate,endDate: endDate},
+    })
+    .done(function(data) {
+      $("#ledgercontainer").html(data);
+      console.log(data);
+    })
+    .fail(function(data) {
+      console.log(data);
+    })
+    .always(function() {
+      console.log("complete");
+    });
+    
+
+
+  // var xhttp = new XMLHttpRequest();
+  // xhttp.onreadystatechange = function() {
+  //   if (this.readyState == 4 && this.status == 200) {
+  //     var response = this.responseText;
       
- $("#ledgercontainer").html(response);
-    }
-  };
-  xhttp.open("GET", "../backend/selecteLedger.php?number="+ledgePart+"&startDate="+startDate+"&endDate="+endDate, true);
-  xhttp.send();
+  //         }
+  // };
+  // xhttp.open("GET", "../backend/selecteLedger.php?number="+ledgePart+"&startDate="+startDate+"&endDate="+endDate, true);
+  // xhttp.send();
 });
 
     </script>
