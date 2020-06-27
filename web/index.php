@@ -1,0 +1,1 @@
+<?php die("<script>location.href='templates/'</script>"); ?>
