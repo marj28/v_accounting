@@ -1,4 +1,4 @@
-<?php require_once '../backend/connection.php'; echo "string"; ?>
+<?php require_once '../backend/connection.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
