@@ -23,25 +23,25 @@ function balancing($accounts,$startDate,$endDate){
 
 			foreach ($result as  $resacc) {
 				$accNumber = $resacc['account_number'];
-				$stmt = connect()->prepare("SELECT SUM(debits) as 'totalDebits' FROM journal WHERE account_number = '$accNumber' AND transaction_date >= '$startDate' AND transaction_date <= '$endDate'");
+				$stmt = connect()->prepare("SELECT SUM(debits) as totaldebits FROM journal WHERE account_number = '$accNumber' AND transaction_date >= '$startDate' AND transaction_date <= '$endDate'");
 				$stmt->execute();
 				$debitstotal = $stmt->setFetchMode(PDO::FETCH_ASSOC);
 				$debitstotal = $stmt->fetchAll();
 
-				$stmt = connect()->prepare("SELECT SUM(credits) as 'totalcredits' FROM journal WHERE account_number = '$accNumber' AND transaction_date >= '$startDate' AND transaction_date <= '$endDate'");
+				$stmt = connect()->prepare("SELECT SUM(credits) as totalcredits FROM journal WHERE account_number = '$accNumber' AND transaction_date >= '$startDate' AND transaction_date <= '$endDate'");
 
 				$stmt->execute();
 				$creditstotal = $stmt->setFetchMode(PDO::FETCH_ASSOC);
 				$creditstotal = $stmt->fetchAll();
 
 				if ($value == 'Current Asset' || $value == 'Assets') {
-				$total = $debitstotal[0]['totalDebits'] - $creditstotal[0]['totalcredits'];
+				$total = $debitstotal[0]['totaldebits'] - $creditstotal[0]['totalcredits'];
 				$totalfinal += $total;
 				$tbodyassets .= "<tr><th>".$resacc['accountname']."</th><th>".$total."</th></tr>";
 				}
 
 				if ($value == 'liabilities' || $value == 'Liabilities') {
-					$total = $creditstotal[0]['totalcredits'] - $debitstotal[0]['totalDebits'];
+					$total = $creditstotal[0]['totalcredits'] - $debitstotal[0]['totaldebits'];
 					$totalliabilities += $total;
 					$tbodylia .= "<tr><th>".$resacc['accountname']."</th><th>".$total."</th></tr>";
 				}
@@ -51,20 +51,20 @@ function balancing($accounts,$startDate,$endDate){
 
 					if (preg_match("/\bdepreciation\b/i", $resacc['accountname'])) {
 
-						$total = $creditstotal[0]['totalcredits'] - $debitstotal[0]['totalDebits'];
+						$total = $creditstotal[0]['totalcredits'] - $debitstotal[0]['totaldebits'];
 						$totalequity += $total;
 						$tbodyequity .= "<tr><th>".$resacc['accountname']."</th><th>".$total."</th></tr>";
 					}
 
 					if (preg_match("/Capital/i", $resacc['accountname'])) {
-						$total = $creditstotal[0]['totalcredits'] - $debitstotal[0]['totalDebits'] + 
+						$total = $creditstotal[0]['totalcredits'] - $debitstotal[0]['totaldebits'] + 
 						netincome($startDate,$endDate);
 						$totalequity += $total;
 						$tbodyequity .= "<tr><th>".$resacc['accountname']."</th><th>".$total."</th></tr>";
 					}
 
 					else{
-						$total = $debitstotal[0]['totalDebits'] - $creditstotal[0]['totalcredits'];
+						$total = $debitstotal[0]['totaldebits'] - $creditstotal[0]['totalcredits'];
 						$totalequity += $total;
 						$tbodyequity .= "<tr><th>".$resacc['accountname']."</th><th>".$total."</th></tr>";
 					}
