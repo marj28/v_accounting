@@ -15,7 +15,7 @@ function balancing($accounts,$startDate,$endDate){
 		$tbodyequity = "";
 		foreach ($accounts as  $value) {
 
-			$stmt = connect()->prepare("SELECT DISTINCT `chartofaccounts`.`accountname`,`journal`.`account_number` FROM `chartofaccounts`, `journal` WHERE `chartofaccounts`.`accountType` = '$value' AND `transaction_date` >= '$startDate' AND `transaction_date` <= '$endDate' AND `chartofaccounts`.`accountnumber` = `journal`.`account_number`");
+			$stmt = connect()->prepare("SELECT DISTINCT chartofaccounts.accountname,journal.account_number FROM chartofaccounts, journal WHERE chartofaccounts.accountType = '$value' AND transaction_date >= '$startDate' AND transaction_date <= '$endDate' AND chartofaccounts.accountnumber = journal.account_number::varchar");
 
 			$stmt->execute();
 			$result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
@@ -23,12 +23,12 @@ function balancing($accounts,$startDate,$endDate){
 
 			foreach ($result as  $resacc) {
 				$accNumber = $resacc['account_number'];
-				$stmt = connect()->prepare("SELECT SUM(debits) as 'totalDebits' FROM journal WHERE `account_number` = '$accNumber' AND `transaction_date` >= '$startDate' AND `transaction_date` <= '$endDate'");
+				$stmt = connect()->prepare("SELECT SUM(debits) as 'totalDebits' FROM journal WHERE account_number = '$accNumber' AND transaction_date >= '$startDate' AND transaction_date <= '$endDate'");
 				$stmt->execute();
 				$debitstotal = $stmt->setFetchMode(PDO::FETCH_ASSOC);
 				$debitstotal = $stmt->fetchAll();
 
-				$stmt = connect()->prepare("SELECT SUM(credits) as 'totalcredits' FROM journal WHERE `account_number` = '$accNumber' AND `transaction_date` >= '$startDate' AND `transaction_date` <= '$endDate'");
+				$stmt = connect()->prepare("SELECT SUM(credits) as 'totalcredits' FROM journal WHERE account_number = '$accNumber' AND transaction_date >= '$startDate' AND transaction_date <= '$endDate'");
 
 				$stmt->execute();
 				$creditstotal = $stmt->setFetchMode(PDO::FETCH_ASSOC);
@@ -137,7 +137,7 @@ function netincome($startDate,$endDate){
 	try {
 		
 		$netincome = 0;$gross = 0; $expense = 0;	
-		$stmt  = $stmt = connect()->prepare("SELECT  `journal`.`debits`, `journal`.`credits` FROM `chartofaccounts`, `journal` WHERE `chartofaccounts`.`accountType` = 'Revenue' AND `transaction_date` >= '$startDate' AND `transaction_date` <= '$endDate' AND `chartofaccounts`.`accountnumber` = `journal`.`account_number`");
+		$stmt  = $stmt = connect()->prepare("SELECT  journal.debits, journal.credits FROM chartofaccounts, journal WHERE chartofaccounts.accountType = 'Revenue' AND transaction_date >= '$startDate' AND transaction_date <= '$endDate' AND chartofaccounts.accountnumber = journal.account_number");
 
 		$stmt->execute();
 		$result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
@@ -148,7 +148,7 @@ function netincome($startDate,$endDate){
 		}
 
 
-		$stmt  = $stmt = connect()->prepare("SELECT  `journal`.`debits`, `journal`.`credits` FROM `chartofaccounts`, `journal` WHERE `chartofaccounts`.`accountType` = 'Expenses' AND `transaction_date` >= '$startDate' AND `transaction_date` <= '$endDate' AND `chartofaccounts`.`accountnumber` = `journal`.`account_number`");
+		$stmt  = $stmt = connect()->prepare("SELECT  journal.debits, journal.credits FROM chartofaccounts, journal WHERE chartofaccounts.accountType = 'Expenses' AND transaction_date >= '$startDate' AND transaction_date <= '$endDate' AND chartofaccounts.accountnumber = journal.account_number");
 
 		$stmt->execute();
 		$result = $stmt->setFetchMode(PDO::FETCH_ASSOC);

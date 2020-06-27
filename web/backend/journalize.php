@@ -8,7 +8,7 @@ try {
 	$cr = $_POST['cr'];
 	$desc = $_POST['desc'];
   $sql = "
-  INSERT INTO `journal`(`transaction_date`, `account_number`, `debits`, `credits`, `description`)
+  INSERT INTO  journal ( transaction_date ,  account_number ,  debits ,  credits ,  description )
   VALUES ('$journalDate','$particulars','$dr','$cr','$desc')";
 
   connect()->exec($sql);

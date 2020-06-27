@@ -7,7 +7,7 @@ try {
 	$accType = $_POST['accType'];
 	$accDesc = $_POST['accDesc'];
   $sql = "
-  INSERT INTO `chartofaccounts`(`accountNumber`, `accountName`, `accountType`, `accountDescription`) 
+  INSERT INTO  chartofaccounts ( accountNumber ,  accountName ,  accountType ,  accountDescription ) 
   VALUES ('$accNumber','$accName','$accType','$accDesc')";
 
   connect()->exec($sql);

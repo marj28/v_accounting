@@ -9,11 +9,10 @@ $stmt = connect()->prepare("SELECT journal.transaction_date, journal.debits, jou
 	chartofaccounts.accountnumber, chartofaccounts.accountname, chartofaccounts.accounttype, chartofaccounts.accountdescription FROM chartofaccounts, journal WHERE journal.account_number::varchar = chartofaccounts.accountnumber AND accountnumber = '$accNumber' AND transaction_date >= '$startDate' AND transaction_date <= 
 	'$endDate'");
 $stmt->execute();
-print_r($stmt);
+
 $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
 $result = $stmt->fetchAll();
 
-print_r($result);
 } catch(PDOException $e) {
   echo "Error: " . $e->getMessage();
 }
