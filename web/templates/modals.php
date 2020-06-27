@@ -400,8 +400,8 @@ $("#InsertJourn").click(function(e){
     .fail(function(data) {
       console.log(data);
     })
-    .always(function() {
-      console.log("complete");
+    .always(function(data) {
+      console.log(data);
     });
     
 
