@@ -142,6 +142,7 @@ $stmt = connect()->prepare("SELECT *  FROM chartofaccounts");
 $stmt->execute();
 $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
 $result = $stmt->fetchAll(); 
+print_r($result);
 ?>
                       <?php foreach ($result as $value): ?>
                       <tr id="chart<?php echo $value['accountNumber'] ?>">
