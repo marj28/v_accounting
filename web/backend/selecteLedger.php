@@ -5,8 +5,8 @@ $accNumber = $_GET['number'];
 $startDate = $_GET['startDate'];
 $endDate = $_GET['endDate'];
 try {
-$stmt = connect()->prepare("SELECT `journal`.`transaction_date`, `journal`.`debits`, `journal`.`credits`,
-	`chartofaccounts`.`accountnumber`, `chartofaccounts`.`accountname`, `chartofaccounts`.`accounttype`, `chartofaccounts`.`accountdescription` FROM `chartofaccounts`, `journal` WHERE `journal`.`account_number` = `chartofaccounts`.`accountnumber` AND `accountnumber` = '$accNumber' AND `transaction_date` >= '$startDate' AND `transaction_date` <= 
+$stmt = connect()->prepare("SELECT journal.transaction_date, journal.debits, journal.credits,
+	chartofaccounts.accountnumber, chartofaccounts.accountname, chartofaccounts.accounttype, chartofaccounts.accountdescription FROM chartofaccounts, journal WHERE journal.account_number::varchar = chartofaccounts.accountnumber AND accountnumber = '$accNumber' AND transaction_date >= '$startDate' AND transaction_date <= 
 	'$endDate'");
 $stmt->execute();
 print_r($stmt);
