@@ -21,8 +21,8 @@ $result = $stmt->fetchAll();
 	<?php $totalCredit = $totalCredit + $value['credits']; ?>
 	<tr class="text-center">
 		<td nowrap><?php echo $value['transaction_date']; ?></td>
-		<td nowrap><?php echo $value['accountName']; ?></td>
-		<td nowrap><?php echo $value['accountNumber']; ?></td>
+		<td nowrap><?php echo $value['accountname']; ?></td>
+		<td nowrap><?php echo $value['accountnumber']; ?></td>
 		<td nowrap><?php echo $value['debits']; ?></td>
 		<td nowrap><?php echo $value['credits']; ?></td>
 	</tr>

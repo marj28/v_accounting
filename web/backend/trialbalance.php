@@ -4,7 +4,7 @@ require_once 'connection.php';
 $startDate = $_GET['startDate'];
 $endDate = $_GET['endDate'];
 try {
-$stmt = connect()->prepare("SELECT `journal`.`transaction_date`, `journal`.`debits`, `journal`.`credits`,`chartofaccounts`.`accountNumber`, `chartofaccounts`.`accountName` FROM `chartofaccounts`, `journal` WHERE `journal`.`account_number` = `chartofaccounts`.`accountNumber` AND `transaction_date` >= '$startDate' AND `transaction_date` <= '$endDate'");
+$stmt = connect()->prepare("SELECT `journal`.`transaction_date`, `journal`.`debits`, `journal`.`credits`,`chartofaccounts`.`accountnumber`, `chartofaccounts`.`accountname` FROM `chartofaccounts`, `journal` WHERE `journal`.`account_number` = `chartofaccounts`.`accountnumber` AND `transaction_date` >= '$startDate' AND `transaction_date` <= '$endDate'");
 $stmt->execute();
 
 $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
@@ -21,8 +21,8 @@ $result = $stmt->fetchAll();
 	<?php $totalCredit = $totalCredit + $value['credits']; ?>
 	<tr class="text-center">
 		<td nowrap><?php echo $value['transaction_date']; ?></td>
-		<td nowrap><?php echo $value['accountName']; ?></td>
-		<td nowrap><?php echo $value['accountNumber']; ?></td>
+		<td nowrap><?php echo $value['accountname']; ?></td>
+		<td nowrap><?php echo $value['accountnumber']; ?></td>
 		<td nowrap><?php echo $value['debits']; ?></td>
 		<td nowrap><?php echo $value['credits']; ?></td>
 	</tr>

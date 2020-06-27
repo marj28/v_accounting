@@ -4,7 +4,7 @@ require_once 'connection.php';
 $accNumber = $_GET['number'];
 $accName = $_GET['accName'];
 try {
-$stmt = connect()->prepare("SELECT COUNT(*) as TotalCount FROM chartofaccounts WHERE `accountNumber` = '$accNumber' OR `accountName` = '$accName'");
+$stmt = connect()->prepare("SELECT COUNT(*) as TotalCount FROM chartofaccounts WHERE `accountnumber` = '$accNumber' OR `accountname` = '$accName'");
 $stmt->execute();
 
 $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);

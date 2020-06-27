@@ -15,7 +15,7 @@ function balancing($accounts,$startDate,$endDate){
 		$tbodyequity = "";
 		foreach ($accounts as  $value) {
 
-			$stmt = connect()->prepare("SELECT DISTINCT `chartofaccounts`.`accountName`,`journal`.`account_number` FROM `chartofaccounts`, `journal` WHERE `chartofaccounts`.`accountType` = '$value' AND `transaction_date` >= '$startDate' AND `transaction_date` <= '$endDate' AND `chartofaccounts`.`accountNumber` = `journal`.`account_number`");
+			$stmt = connect()->prepare("SELECT DISTINCT `chartofaccounts`.`accountname`,`journal`.`account_number` FROM `chartofaccounts`, `journal` WHERE `chartofaccounts`.`accountType` = '$value' AND `transaction_date` >= '$startDate' AND `transaction_date` <= '$endDate' AND `chartofaccounts`.`accountnumber` = `journal`.`account_number`");
 
 			$stmt->execute();
 			$result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
@@ -37,36 +37,36 @@ function balancing($accounts,$startDate,$endDate){
 				if ($value == 'Current Asset' || $value == 'Assets') {
 				$total = $debitstotal[0]['totalDebits'] - $creditstotal[0]['totalcredits'];
 				$totalfinal += $total;
-				$tbodyassets .= "<tr><th>".$resacc['accountName']."</th><th>".$total."</th></tr>";
+				$tbodyassets .= "<tr><th>".$resacc['accountname']."</th><th>".$total."</th></tr>";
 				}
 
 				if ($value == 'liabilities' || $value == 'Liabilities') {
 					$total = $creditstotal[0]['totalcredits'] - $debitstotal[0]['totalDebits'];
 					$totalliabilities += $total;
-					$tbodylia .= "<tr><th>".$resacc['accountName']."</th><th>".$total."</th></tr>";
+					$tbodylia .= "<tr><th>".$resacc['accountname']."</th><th>".$total."</th></tr>";
 				}
 
 
 				if ($value == 'Owners Equity') {
 
-					if (preg_match("/\bdepreciation\b/i", $resacc['accountName'])) {
+					if (preg_match("/\bdepreciation\b/i", $resacc['accountname'])) {
 
 						$total = $creditstotal[0]['totalcredits'] - $debitstotal[0]['totalDebits'];
 						$totalequity += $total;
-						$tbodyequity .= "<tr><th>".$resacc['accountName']."</th><th>".$total."</th></tr>";
+						$tbodyequity .= "<tr><th>".$resacc['accountname']."</th><th>".$total."</th></tr>";
 					}
 
-					if (preg_match("/Capital/i", $resacc['accountName'])) {
+					if (preg_match("/Capital/i", $resacc['accountname'])) {
 						$total = $creditstotal[0]['totalcredits'] - $debitstotal[0]['totalDebits'] + 
 						netincome($startDate,$endDate);
 						$totalequity += $total;
-						$tbodyequity .= "<tr><th>".$resacc['accountName']."</th><th>".$total."</th></tr>";
+						$tbodyequity .= "<tr><th>".$resacc['accountname']."</th><th>".$total."</th></tr>";
 					}
 
 					else{
 						$total = $debitstotal[0]['totalDebits'] - $creditstotal[0]['totalcredits'];
 						$totalequity += $total;
-						$tbodyequity .= "<tr><th>".$resacc['accountName']."</th><th>".$total."</th></tr>";
+						$tbodyequity .= "<tr><th>".$resacc['accountname']."</th><th>".$total."</th></tr>";
 					}
 
 				}
@@ -137,7 +137,7 @@ function netincome($startDate,$endDate){
 	try {
 		
 		$netincome = 0;$gross = 0; $expense = 0;	
-		$stmt  = $stmt = connect()->prepare("SELECT  `journal`.`debits`, `journal`.`credits` FROM `chartofaccounts`, `journal` WHERE `chartofaccounts`.`accountType` = 'Revenue' AND `transaction_date` >= '$startDate' AND `transaction_date` <= '$endDate' AND `chartofaccounts`.`accountNumber` = `journal`.`account_number`");
+		$stmt  = $stmt = connect()->prepare("SELECT  `journal`.`debits`, `journal`.`credits` FROM `chartofaccounts`, `journal` WHERE `chartofaccounts`.`accountType` = 'Revenue' AND `transaction_date` >= '$startDate' AND `transaction_date` <= '$endDate' AND `chartofaccounts`.`accountnumber` = `journal`.`account_number`");
 
 		$stmt->execute();
 		$result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
@@ -148,7 +148,7 @@ function netincome($startDate,$endDate){
 		}
 
 
-		$stmt  = $stmt = connect()->prepare("SELECT  `journal`.`debits`, `journal`.`credits` FROM `chartofaccounts`, `journal` WHERE `chartofaccounts`.`accountType` = 'Expenses' AND `transaction_date` >= '$startDate' AND `transaction_date` <= '$endDate' AND `chartofaccounts`.`accountNumber` = `journal`.`account_number`");
+		$stmt  = $stmt = connect()->prepare("SELECT  `journal`.`debits`, `journal`.`credits` FROM `chartofaccounts`, `journal` WHERE `chartofaccounts`.`accountType` = 'Expenses' AND `transaction_date` >= '$startDate' AND `transaction_date` <= '$endDate' AND `chartofaccounts`.`accountnumber` = `journal`.`account_number`");
 
 		$stmt->execute();
 		$result = $stmt->setFetchMode(PDO::FETCH_ASSOC);

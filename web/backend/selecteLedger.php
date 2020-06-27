@@ -6,7 +6,7 @@ $startDate = $_GET['startDate'];
 $endDate = $_GET['endDate'];
 try {
 $stmt = connect()->prepare("SELECT `journal`.`transaction_date`, `journal`.`debits`, `journal`.`credits`,
-	`chartofaccounts`.`accountNumber`, `chartofaccounts`.`accountName`, `chartofaccounts`.`accountType`, `chartofaccounts`.`accountDescription` FROM `chartofaccounts`, `journal` WHERE `journal`.`account_number` = `chartofaccounts`.`accountNumber` AND `accountNumber` = '$accNumber' AND `transaction_date` >= '$startDate' AND `transaction_date` <= 
+	`chartofaccounts`.`accountnumber`, `chartofaccounts`.`accountname`, `chartofaccounts`.`accounttype`, `chartofaccounts`.`accountdescription` FROM `chartofaccounts`, `journal` WHERE `journal`.`account_number` = `chartofaccounts`.`accountnumber` AND `accountnumber` = '$accNumber' AND `transaction_date` >= '$startDate' AND `transaction_date` <= 
 	'$endDate'");
 $stmt->execute();
 
@@ -24,10 +24,10 @@ $balance = 0.00;
 	<?php $balance = $balance + ($value['debits'] - $value['credits']); ?>
 	<tr class="text-center">
 		<td nowrap><?php echo $value['transaction_date']; ?></td>
-		<td nowrap><?php echo $value['accountType']; ?></td>
-		<td nowrap><?php echo $value['accountName']; ?></td>
-		<td nowrap><?php echo $value['accountNumber']; ?></td>
-		<td nowrap><?php echo $value['accountDescription']; ?></td>
+		<td nowrap><?php echo $value['accounttype']; ?></td>
+		<td nowrap><?php echo $value['accountname']; ?></td>
+		<td nowrap><?php echo $value['accountnumber']; ?></td>
+		<td nowrap><?php echo $value['accountdescription']; ?></td>
 		<td nowrap><?php echo $value['debits']; ?></td>
 		<td nowrap><?php echo $value['credits']; ?></td>
 		<td nowrap><?php echo $balance; ?></td>
