@@ -10,8 +10,9 @@ try {
   $sql = "INSERT INTO  
   journal ( transaction_date ,  account_number ,  debits ,  credits ,  description )
   VALUES ('$journalDate','$particulars','$dr','$cr','$desc')";
-
-  connect()->exec($sql);
+  $statement = connect()->prepare($query);
+  $statement->execute();
+  // connect()->exec($sql);
   http_response_code(200);
   echo $sql;
 } catch(PDOException $e) {
