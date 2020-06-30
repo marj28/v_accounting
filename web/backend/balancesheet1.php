@@ -117,12 +117,11 @@ function balancing($accounts,$startDate,$endDate){
 						</tr>
 						<tr style='border-top:double;'>
 						<th>Total Owners Equity and Liablites</th>
-						<th>".(($totalliabilities + $totalequity) + $income)."</th>
+						<th>".($totalliabilities + $totalequity)."</th>
 						</tr>
 					</thead>
 
 					</table>";
-		print_r($income);
 		return $result;
 	}
 
@@ -160,7 +159,6 @@ function netincome($startDate,$endDate){
 		}
 
 		$netincome = $gross - $expense;
-		echo "<script>alert('".$netincome."')</script>";
 		return $netincome;
 	} 
 
