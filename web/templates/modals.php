@@ -161,7 +161,21 @@ $chartofaccounts = $stmt->fetchAll();
 }
 
  ?>
+<?php 
+try {
+$stmt1 = connect()->prepare("SELECT * FROM journal");
+$stmt1->execute();
 
+$journals = $stmt1->setFetchMode(PDO::FETCH_ASSOC);
+$journals = $stmt1->fetchAll();
+
+
+} catch(PDOException $e) {
+  echo "Error: " . $e->getMessage();
+}
+
+
+ ?>
 <!-- The Modal -->
 <div class="modal" id="journalize">
   <div class="modal-document">
@@ -213,21 +227,7 @@ $chartofaccounts = $stmt->fetchAll();
 
 </div>
 </div>
-<?php 
-try {
-$stmt = connect()->prepare("SELECT * FROM journal");
-$stmt->execute();
 
-$journals = $stmt->setFetchMode(PDO::FETCH_ASSOC);
-$journals = $stmt->fetchAll();
-
-
-} catch(PDOException $e) {
-  echo "Error: " . $e->getMessage();
-}
-
-
- ?>
 <div class="col-md-8" style="max-height: 500px; overflow-y: scroll;">
   <h4 style="position: sticky;">Current Journal</h4>
   <div class="table-responsive">
