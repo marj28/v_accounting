@@ -8,7 +8,7 @@ try {
 
   connect()->exec($sql);
   http_response_code(200);
-  echo $sql;
+  echo 'Deleted';
 } catch(PDOException $e) {
 http_response_code(500);
   echo $sql . "<br>" . $e->getMessage();

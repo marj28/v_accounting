@@ -11,7 +11,7 @@ try {
   VALUES ('$accNumber','$accName','$accType','$accDesc')";
 
   connect()->exec($sql);
-  echo $sql;
+  echo 'Inserted Successfully';
 } catch(PDOException $e) {
   http_response_code(500);
   echo $sql . "<br>" . $e->getMessage();
