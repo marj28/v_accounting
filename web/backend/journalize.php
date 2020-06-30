@@ -20,21 +20,3 @@ http_response_code(500);
 }
 
 
-
-class Classroom {
-  
- private $oldLaw = False;
-
- function changeLaw($newLaw){
-  
-  if ($newLaw === $this.oldLaw) {
-    changeLaw($canGoOut=True);
-  }
-
-  else{
-    goOut();
-  }
-
-  }
-
-}
