@@ -112,7 +112,7 @@
           <div class="col-md-12">
             <div class="card">
               <div class="card-header">
-                <h5 class="card-category">Curay Laundry</h5>
+                <h5 class="card-category">V Laundry</h5>
                 <h4 class="card-title">Chart of Accounts</h4>
               </div>
               <div class="card-body">
