@@ -2,10 +2,10 @@
 require_once 'connection.php';
 try {
 
-	$accNumber = $_POST['accNumber1'];
-	$accName = $_POST['accName1'];
-	$accType = $_POST['accType1'];
-	$accDesc = $_POST['accDesc1'];
+	$accNumber = $_POST['accNumber'];
+	$accName = $_POST['accName'];
+	$accType = $_POST['accType'];
+	$accDesc = $_POST['accDesc'];
   $sql = "UPDATE chartofaccounts SET
 accountnumber = '$accNumber',
 accountname = '$accName',
@@ -15,7 +15,7 @@ WHERE accNumber = '$accNumber';";
 
 connect()->exec($sql);
   http_response_code(200);
-  echo $sql;
+  echo 'Account Updated';
 } catch(PDOException $e) {
 
   echo $sql . "<br>" . $e->getMessage();
