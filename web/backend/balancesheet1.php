@@ -122,7 +122,7 @@ function balancing($accounts,$startDate,$endDate){
 					</thead>
 
 					</table>";
-
+		print_r($income);
 		return $result;
 	}
 
