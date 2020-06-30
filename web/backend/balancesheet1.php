@@ -160,7 +160,7 @@ function netincome($startDate,$endDate){
 		}
 
 		$netincome = $gross - $expense;
-
+		echo "<script>alert('".$netincome."')</script>";
 		return $netincome;
 	} 
 
