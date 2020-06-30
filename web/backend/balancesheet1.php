@@ -13,6 +13,7 @@ function balancing($accounts,$startDate,$endDate){
 		$tbodylia = "";
 		$totalequity = 0;
 		$tbodyequity = "";
+		$income = 0;
 		foreach ($accounts as  $value) {
 
 			$stmt = connect()->prepare("SELECT DISTINCT chartofaccounts.accountname,journal.account_number FROM chartofaccounts, journal WHERE chartofaccounts.accountType = '$value' AND transaction_date >= '$startDate' AND transaction_date <= '$endDate' AND chartofaccounts.accountnumber = journal.account_number::varchar");
@@ -58,7 +59,7 @@ function balancing($accounts,$startDate,$endDate){
 
 					if (preg_match("/Capital/i", $resacc['accountname'])) {
 						$total = $creditstotal[0]['totalcredits'] - $debitstotal[0]['totaldebits'] + 
-						netincome($startDate,$endDate);
+						$income = netincome($startDate,$endDate);
 						$totalequity += $total;
 						$tbodyequity .= "<tr><th>".$resacc['accountname']."</th><th>".$total."</th></tr>";
 					}
@@ -116,7 +117,7 @@ function balancing($accounts,$startDate,$endDate){
 						</tr>
 						<tr style='border-top:double;'>
 						<th>Total Owners Equity and Liablites</th>
-						<th>".($totalliabilities + $totalequity)."</th>
+						<th>".(($totalliabilities + $totalequity) + $income)."</th>
 						</tr>
 					</thead>
 
