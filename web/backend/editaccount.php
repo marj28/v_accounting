@@ -11,11 +11,11 @@ accountnumber = '$accNumber',
 accountname = '$accName',
 accounttype = '$accType',
 accountdescription = '$accDesc'
-WHERE accNumber = '$accNumber';";
+WHERE accountnumber = '$accNumber';";
 
 connect()->exec($sql);
   http_response_code(200);
-  echo $sql;
+  echo 'Updated Successfully. Please reload to view the changes';
 } catch(PDOException $e) {
 
   echo $sql . "<br>" . $e->getMessage();

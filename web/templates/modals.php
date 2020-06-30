@@ -718,7 +718,7 @@ function editaccount(){
     data: {accNumber: accNumber1,accName: accName1,accType: accType1,accDesc: accDesc1},
   })
   .done(function(data) {
-   console.log(data);
+   alert(data);
   })
   .fail(function(data) {
     console.log(data);
