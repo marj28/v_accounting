@@ -701,26 +701,9 @@ $("#InsertJourn").click(function(e){
 
 
   $("#updateacc").click(function(e){
-  e.stopPropagation();
-  var accNumber = $("#accNumber1").val();
-  var accName = $("#accName1").val();
-  var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-      var response = this.responseText;
-      
-      if (this.status == 200) {
-        editaccount();
-      }
-    }
 
-    if (this.status == 403) {
-      alert("Account Already Exist");
-    }
-    
-  };
-  xhttp.open("GET", "../backend/validation.php?number="+accNumber+"&accName="+accName, true);
-  xhttp.send();
+        editaccount();
+
 });
 
 
