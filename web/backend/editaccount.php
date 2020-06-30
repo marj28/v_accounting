@@ -15,7 +15,7 @@ WHERE accNumber = '$accNumber';";
 
 connect()->exec($sql);
   http_response_code(200);
-  echo "Account Updated";
+  echo $sql;
 } catch(PDOException $e) {
 
   echo $sql . "<br>" . $e->getMessage();
