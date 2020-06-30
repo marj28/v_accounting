@@ -735,11 +735,7 @@ function editaccount(){
     data: {accNumber: accNumber,accName: accName,accType: accType,accDesc: accDesc},
   })
   .done(function(data) {
-    console.log(data);
-   $("#accNumber1").val('');
-   $("#accName1").val('');
-    $("#accType1").val('');
-   $("#accDesc1").val('');
+   console.log(data);
    $("#updateacc").attr("disabled", "disabled");
   })
   .fail(function(data) {
