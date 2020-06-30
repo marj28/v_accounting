@@ -161,6 +161,8 @@ $chartofaccounts = $stmt->fetchAll();
 }
 
  ?>
+
+
 <?php 
 try {
 $stmt1 = connect()->prepare("SELECT * FROM journal");
@@ -242,8 +244,8 @@ $journals = $stmt1->fetchAll();
       </tr>
     </thead>
     <tbody>
-<?php foreach ($journals => $value): ?>
-     <tr id="journalize<?php echo $value['account_number']; ?>">
+<?php foreach ($journals as $value): ?>
+    <tr id="journalize<?php echo $value['account_number']; ?>">
     <td><?php echo $value['transaction_date']; ?></td>
     <td><?php echo $value['account_number']; ?></td>
     <td><?php echo $value['debits']; ?></td>
