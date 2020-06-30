@@ -719,7 +719,6 @@ function editaccount(){
   })
   .done(function(data) {
    console.log(data);
-   $("#updateacc").attr("disabled", "disabled");
   })
   .fail(function(data) {
     console.log(data);
