@@ -301,26 +301,26 @@ $("#InsertJourn").click(function(e){
     url: '../backend/journalize.php',
     type: 'POST',
     data: {journalDate: journalDate,particulars: particulars,dr: dr,cr: cr,desc: desc},
-  })
-  .done(function(data) {
+
+  }).done(function(data) {
     console.log(data);
 
     var newRowContent = `<tr id="journalize${accNumber}">
     <td>${journalDate}</td><td>${particulars}</td><td>${dr}</td>
     <td>${cr}</td><td>${desc}</td>
     </tr>`;
-    $('#journalizing > tbody:last').append(newRowContent);
+   $('#journalizing > tbody:last').append(newRowContent);
    $("#journalDate").val('');
    $("#particulars").val('');
-    $("#dr").val('');
+   $("#dr").val('');
    $("#cr").val('');
    $("#desc").val('');
   })
   .fail(function(data) {
-    console.log("error");
+    console.log(data);
   })
-  .always(function() {
-    console.log("complete");
+  .always(function(data) {
+    console.log(data);
   });
   
 });

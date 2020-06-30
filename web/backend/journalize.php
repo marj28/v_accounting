@@ -7,13 +7,13 @@ try {
 	$dr = $_POST['dr'];
 	$cr = $_POST['cr'];
 	$desc = $_POST['desc'];
-  $sql = "
-  INSERT INTO  journal ( transaction_date ,  account_number ,  debits ,  credits ,  description )
+  $sql = "INSERT INTO  
+  journal ( transaction_date ,  account_number ,  debits ,  credits ,  description )
   VALUES ('$journalDate','$particulars','$dr','$cr','$desc')";
 
   connect()->exec($sql);
   http_response_code(200);
-  echo 'Inserted Successfully';
+  echo $sql;
 } catch(PDOException $e) {
 http_response_code(500);
   echo $sql . "<br>" . $e->getMessage();
