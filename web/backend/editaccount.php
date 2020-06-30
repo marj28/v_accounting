@@ -2,10 +2,10 @@
 require_once 'connection.php';
 try {
 
-	$accNumber = $_POST['accNumber'];
-	$accName = $_POST['accName'];
-	$accType = $_POST['accType'];
-	$accDesc = $_POST['accDesc'];
+	$accNumber = $_POST['accNumber1'];
+	$accName = $_POST['accName1'];
+	$accType = $_POST['accType1'];
+	$accDesc = $_POST['accDesc1'];
   $sql = "UPDATE "chartofaccounts" SET
 "accountnumber" = '$accNumber',
 "accountname" = '$accName',

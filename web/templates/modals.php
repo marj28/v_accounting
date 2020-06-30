@@ -708,14 +708,14 @@ $("#InsertJourn").click(function(e){
 
 
 function editaccount(){
-    var accNumber = $("#accNumber1").val();
-    var accName = $("#accName1").val();
-    var accType = $("#accType1").val();
-    var accDesc = $("#accDesc1").val();
+    var accNumber1 = $("#accNumber1").val();
+    var accName1 = $("#accName1").val();
+    var accType1 = $("#accType1").val();
+    var accDesc1 = $("#accDesc1").val();
   $.ajax({
     url: '../backend/editaccount.php',
     type: 'POST',
-    data: {accNumber: accNumber,accName: accName,accType: accType,accDesc: accDesc},
+    data: {accNumber: accNumber1,accName: accName1,accType: accType1,accDesc: accDesc1},
   })
   .done(function(data) {
    console.log(data);
