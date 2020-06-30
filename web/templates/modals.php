@@ -213,7 +213,21 @@ $chartofaccounts = $stmt->fetchAll();
 
 </div>
 </div>
+<?php 
+try {
+$stmt = connect()->prepare("SELECT * FROM journal");
+$stmt->execute();
 
+$journals = $stmt->setFetchMode(PDO::FETCH_ASSOC);
+$journals = $stmt->fetchAll();
+
+
+} catch(PDOException $e) {
+  echo "Error: " . $e->getMessage();
+}
+
+
+ ?>
 <div class="col-md-8" style="max-height: 500px; overflow-y: scroll;">
   <h4 style="position: sticky;">Current Journal</h4>
   <div class="table-responsive">
@@ -228,6 +242,16 @@ $chartofaccounts = $stmt->fetchAll();
       </tr>
     </thead>
     <tbody>
+<?php foreach ($journals => $value): ?>
+     <tr id="journalize<?php echo $value['account_number']; ?>">
+    <td><?php echo $value['transaction_date']; ?></td>
+    <td><?php echo $value['account_number']; ?></td>
+    <td><?php echo $value['debits']; ?></td>
+    <td><?php echo $value['credits']; ?></td>
+    <td><?php echo $value['description']; ?></td>
+      </tr>
+<?php endforeach ?>
+    
     </tbody>
   </table>
 </div>
@@ -289,7 +313,6 @@ $("#InsertJourn").click(function(e){
     $("#dr").val('');
    $("#cr").val('');
    $("#desc").val('');
-   $("#InsertJourn").attr("disabled", "disabled");
   })
   .fail(function(data) {
     console.log("error");
