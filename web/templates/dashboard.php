@@ -119,20 +119,20 @@
                 <div class="table-responsive">
                   <table class="table" id="chartofaccountstable">
                     <thead class=" text-primary">
-                      <th>
+                      <th nowrap>
                         Account Number
                       </th>
-                      <th>
+                      <th nowrap>
                         Account Name
                       </th>
-                      <th>
+                      <th nowrap>
                         Account Type
                       </th>
-                      <th class="text-right">
+                      <th nowrap class="text-right">
                         Account Description
                       </th>
 
-                      <th class="text-center">
+                      <th nowrap class="text-center">
                         Action
                       </th>
                     </thead>
