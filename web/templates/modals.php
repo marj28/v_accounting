@@ -102,17 +102,17 @@ $("#InsertAcc").click(function(e){
 });
 
 function chartAjax(){
+
     var accNumber = $("#accNumber").val();
     var accName = $("#accName").val();
     var accType = $("#accType").val();
     var accDesc = $("#accDesc").val();
+
   $.ajax({
     url: '../backend/insert.php',
     type: 'POST',
     data: {accNumber: accNumber,accName: accName,accType: accType,accDesc: accDesc},
-  })
-  .done(function(data) {
-    
+  }).done(function(data) {
     console.log(data);
     var newRowContent = `<tr id="chart${accNumber}">
     <td>${accNumber}</td><td>${accName}</td><td>${accType}</td>
@@ -277,7 +277,7 @@ $("#InsertJourn").click(function(e){
     data: {journalDate: journalDate,particulars: particulars,dr: dr,cr: cr,desc: desc},
   })
   .done(function(data) {
-    console.log("success");
+    console.log(data);
 
     var newRowContent = `<tr id="journalize${accNumber}">
     <td>${journalDate}</td><td>${particulars}</td><td>${dr}</td>
