@@ -292,6 +292,7 @@ if (journalDate && desc  && cr  && dr  && particulars ) {
 
 $("#InsertJourn").click(function(e){
   e.stopPropagation();
+  
   var journalDate = $("#journalDate").val();
   var particulars = $("#particulars").val();
   var dr = $("#dr").val();
@@ -303,6 +304,7 @@ $("#InsertJourn").click(function(e){
     data: {journalDate: journalDate,particulars: particulars,dr: dr,cr: cr,desc: desc},
 
   }).done(function(data) {
+    alert("completed")
     console.log(data);
 
     var newRowContent = `<tr id="journalize${accNumber}">
