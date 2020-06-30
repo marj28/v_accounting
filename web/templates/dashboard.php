@@ -161,7 +161,13 @@ $result = $stmt->fetchAll();
                           <button class="btn btn-danger" 
                           onclick="deleteAccount('<?php echo $value['accountnumber'] ?>')">Delete</button>
 
-                          <button class="btn btn-sucess" onclick="editchart(<?php echo $value['accountnumber'] ?>)">Edit</button>
+                          <button class="btn btn-sucess" data-toggle="modal" data-target="#edtichart"
+
+                          onclick="editchart(
+                            <?php echo $value['accountnumber'] ?>,
+                            '<?php echo $value['accountname'] ?>',
+                            '<?php echo $value['accounttype'] ?>',
+                            '<?php echo $value['accountdescription'] ?>')">Edit</button>
                         </td>
                       </tr>
                     <?php endforeach ?>
@@ -179,6 +185,16 @@ function deleteAccount(id){
   xhttp.open("GET", "../backend/delete.php?number="+id+"&for=chartofaccounts", true);
   xhttp.send();
 }
+
+
+function editchart(a,b,c,d){
+
+    $("#accNumber1").val(a);
+    $("#accName1").val(b);
+    $("#accType1").val(c);
+    $("#accDesc1").val(d);
+}
+
 
 
                     </script>

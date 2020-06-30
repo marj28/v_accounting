@@ -62,6 +62,7 @@
       $("#InsertAcc").attr("disabled", "disabled");
       $("#InsertJourn").attr("disabled", "disabled");
       $("#selectLedger").attr("disabled", "disabled");
+      $("#updateacc").attr("disabled", "disabled");
   });
 
   function check() {
@@ -623,3 +624,133 @@ $("#InsertJourn").click(function(e){
     </div>
   </div>
 </div>
+
+
+<!-- The Modal -->
+<div class="modal" id="edtichart">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Edit Account</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+
+         <div class="form-group">
+  <label for="usr">Account Number:</label>
+  <input type="text" required class="form-control" onemptied="checker()" oninput="checker()" id="accNumber1">
+</div>
+
+        <div class="form-group">
+  <label for="usr">Account Name:</label>
+  <input type="text" required class="form-control" onemptied="checker()" oninput="checker()"  id="accName1">
+</div>
+
+        <div class="form-group">
+  <label for="usr">Account Type:</label>
+  <select id="accType1" onchange="checker()" required class=" form-control  custom-select">
+    <option value="" disabled selected>ACCOUNT TYPE</option>
+    <option value="Current Asset">Current Asset</option>
+    <option value="Assets">Assets</option>
+    <option value="liabilities">Liabilities</option>
+    <option value="Revenue">Revenue</option>
+    <option value="Expenses">Expenses</option>
+    <option value="Owners Equity">Owners Equity</option>
+  </select>
+  
+</div>
+
+
+        <div class="form-group">
+  <label for="usr">Account Description:</label>
+  <input type="text" required class="form-control" onemptied="checker()" oninput="checker()" id="accDesc1">
+</div>
+<div class="form-group">
+<input type="submit" class="btn btn-primary" value="Insert" name="updateacc" id="updateacc">
+</div>
+
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+
+  function checker() {
+    var accNumber = $("#accNumber").val();
+    var accName = $("#accName").val();
+    var accType = $("#accType").val();
+    var accDesc = $("#accDesc").val();
+    if (accName != "" && accNumber != "" && accDesc != "" && accType != "") {
+      $("#updateacc").removeAttr("disabled");
+    }
+    else{
+      $("#updateacc").attr("disabled", "disabled");
+    }
+  }
+
+
+  $("#updateacc").click(function(e){
+  e.stopPropagation();
+  var accNumber = $("#accNumber").val();
+  var accName = $("#accName").val();
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      var response = this.responseText;
+      
+      if (this.status == 200) {
+        editaccount();
+      }
+    }
+
+    if (this.status == 403) {
+      alert("Account Already Exist");
+    }
+    
+  };
+  xhttp.open("GET", "../backend/validation.php?number="+accNumber+"&accName="+accName, true);
+  xhttp.send();
+});
+
+
+function editaccount(){
+    var accNumber = $("#accNumber1").val();
+    var accName = $("#accName1").val();
+    var accType = $("#accType1").val();
+    var accDesc = $("#accDesc1").val();
+  $.ajax({
+    url: '../backend/editaccount.php',
+    type: 'POST',
+    data: {accNumber: accNumber,accName: accName,accType: accType,accDesc: accDesc},
+  })
+  .done(function(data) {
+    console.log(data);
+   $("#accNumber1").val('');
+   $("#accName1").val('');
+    $("#accType1").val('');
+   $("#accDesc1").val('');
+   $("#updateacc").attr("disabled", "disabled");
+  })
+  .fail(function(data) {
+    console.log(data);
+    alert("Error, Please check the console for more details");
+  })
+  .always(function() {
+    console.log("complete");
+  });
+  
+}  
+
+
+</script>
