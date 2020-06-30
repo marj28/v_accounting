@@ -158,10 +158,10 @@ $result = $stmt->fetchAll();
                           <?php echo $value['accountdescription'] ?>
                         </td>
                         <td class="text-center">
-                          <button class="btn btn-danger" 
+                          <button class="btn btn-danger btn-sm" 
                           onclick="deleteAccount('<?php echo $value['accountnumber'] ?>')">Delete</button>
 
-                          <button class="btn btn-sucess" data-toggle="modal" data-target="#edtichart"
+                          <button class="btn btn-sucess btn-sm" data-toggle="modal" data-target="#edtichart"
 
                           onclick="editchart(
                             <?php echo $value['accountnumber'] ?>,
