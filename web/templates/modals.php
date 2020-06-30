@@ -724,8 +724,8 @@ function editaccount(){
     console.log(data);
     alert("Error, Please check the console for more details");
   })
-  .always(function() {
-    console.log("complete");
+  .always(function(data) {
+    console.log(data);
   });
   
 }  
