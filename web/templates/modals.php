@@ -112,6 +112,7 @@ function chartAjax(){
     data: {accNumber: accNumber,accName: accName,accType: accType,accDesc: accDesc},
   })
   .done(function(data) {
+    
     console.log(data);
     var newRowContent = `<tr id="chart${accNumber}">
     <td>${accNumber}</td><td>${accName}</td><td>${accType}</td>
