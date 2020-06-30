@@ -145,16 +145,16 @@ $result = $stmt->fetchAll();
 ?>
                       <?php foreach ($result as $value): ?>
                       <tr id="chart<?php echo $value['accountnumber'] ?>">
-                        <td>
+                        <td nowrap>
                           <?php echo $value['accountnumber'] ?>
                         </td>
-                        <td>
+                        <td nowrap>
                           <?php echo $value['accountname'] ?>
                         </td>
-                        <td>
+                        <td nowrap>
                           <?php echo $value['accounttype'] ?>
-                        </td>
-                        <td class="text-right">
+                        </td nowrap>
+                        <td class="text-right" nowrap>
                           <?php echo $value['accountdescription'] ?>
                         </td>
                         <td class="text-center">
