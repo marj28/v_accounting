@@ -138,7 +138,7 @@ function netincome($startDate,$endDate){
 	try {
 		
 		$netincome = 0;$gross = 0; $expense = 0;	
-		$stmt = connect()->prepare("SELECT  journal.debits, journal.credits FROM chartofaccounts, journal WHERE chartofaccounts.accountType = 'Revenue' AND transaction_date >= '$startDate' AND transaction_date <= '$endDate' AND chartofaccounts.accountnumber::varchar = journal.account_number");
+		$stmt = connect()->prepare("SELECT  journal.debits, journal.credits FROM chartofaccounts, journal WHERE chartofaccounts.accountType = 'Revenue' AND transaction_date >= '$startDate' AND transaction_date <= '$endDate' AND chartofaccounts.accountnumber = journal.account_number::varchar");
 
 		$stmt->execute();
 		$result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
@@ -149,7 +149,7 @@ function netincome($startDate,$endDate){
 		}
 
 
-		$stmt = connect()->prepare("SELECT  journal.debits, journal.credits FROM chartofaccounts, journal WHERE chartofaccounts.accountType = 'Expenses' AND transaction_date >= '$startDate' AND transaction_date <= '$endDate' AND chartofaccounts.accountnumber::varchar = journal.account_number");
+		$stmt = connect()->prepare("SELECT  journal.debits, journal.credits FROM chartofaccounts, journal WHERE chartofaccounts.accountType = 'Expenses' AND transaction_date >= '$startDate' AND transaction_date <= '$endDate' AND chartofaccounts.accountnumber = journal.account_number::varchar");
 
 		$stmt->execute();
 		$result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
