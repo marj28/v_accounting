@@ -687,10 +687,10 @@ $("#InsertJourn").click(function(e){
 <script>
 
   function checker() {
-    var accNumber = $("#accNumber").val();
-    var accName = $("#accName").val();
-    var accType = $("#accType").val();
-    var accDesc = $("#accDesc").val();
+    var accNumber = $("#accNumber1").val();
+    var accName = $("#accName1").val();
+    var accType = $("#accType1").val();
+    var accDesc = $("#accDesc1").val();
     if (accName != "" && accNumber != "" && accDesc != "" && accType != "") {
       $("#updateacc").removeAttr("disabled");
     }
@@ -702,8 +702,8 @@ $("#InsertJourn").click(function(e){
 
   $("#updateacc").click(function(e){
   e.stopPropagation();
-  var accNumber = $("#accNumber").val();
-  var accName = $("#accName").val();
+  var accNumber = $("#accNumber1").val();
+  var accName = $("#accName1").val();
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
