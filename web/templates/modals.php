@@ -86,7 +86,6 @@ $("#InsertAcc").click(function(e){
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
       var response = this.responseText;
-      console.log(response);
       if (this.status == 200) {
         chartAjax();
       }
@@ -114,6 +113,7 @@ function chartAjax(){
     data: {accNumber: accNumber,accName: accName,accType: accType,accDesc: accDesc},
   }).done(function(data) {
     console.log(data);
+
     var newRowContent = `<tr id="chart${accNumber}">
     <td>${accNumber}</td><td>${accName}</td><td>${accType}</td>
     <td class="text-right">${accDesc}</td>
@@ -126,6 +126,7 @@ function chartAjax(){
     </button>
     </td>
     </tr>`;
+
     $('#chartofaccountstable > tbody:last').append(newRowContent);
     alert(data);
    $("#accNumber").val('');
@@ -163,21 +164,6 @@ $chartofaccounts = $stmt->fetchAll();
  ?>
 
 
-<?php 
-try {
-$stmt1 = connect()->prepare("SELECT * FROM journal");
-$stmt1->execute();
-
-$journals = $stmt1->setFetchMode(PDO::FETCH_ASSOC);
-$journals = $stmt1->fetchAll();
-
-
-} catch(PDOException $e) {
-  echo "Error: " . $e->getMessage();
-}
-
-
- ?>
 <!-- The Modal -->
 <div class="modal" id="journalize">
   <div class="modal-document">
@@ -226,7 +212,7 @@ $journals = $stmt1->fetchAll();
 </div>
 <div class="form-group">
 <input type="submit" class="btn btn-primary" value="Insert" name="InsertJourn" id="InsertJourn">
-
+<button type="button" onclick="save()" class="btn btn-primary">Save Journal</button>
 </div>
 </div>
 
@@ -244,16 +230,7 @@ $journals = $stmt1->fetchAll();
       </tr>
     </thead>
     <tbody>
-<?php foreach ($journals as $value): ?>
-    <tr id="journalize<?php echo $value['account_number']; ?>">
-    <td><?php echo $value['transaction_date']; ?></td>
-    <td><?php echo $value['account_number']; ?></td>
-    <td><?php echo $value['debits']; ?></td>
-    <td><?php echo $value['credits']; ?></td>
-    <td><?php echo $value['description']; ?></td>
-      </tr>
-<?php endforeach ?>
-    
+
     </tbody>
   </table>
 </div>
@@ -274,7 +251,9 @@ $journals = $stmt1->fetchAll();
 
 
 <script>
-  
+var journal = [];
+var debitotal = 0;
+var credittotal = 0;
 function checkjournalInput(){
   var journalDate = $("#journalDate").val();
   var particulars = $("#particulars").val();
@@ -290,24 +269,27 @@ if (journalDate && desc  && cr  && dr  && particulars ) {
     }
 }
 
+Object.size = function(obj) {
+    var size = 0, key;
+    for (key in obj) {
+        if (obj.hasOwnProperty(key)) size++;
+    }
+    return size;
+};
+
 $("#InsertJourn").click(function(e){
+
   e.stopPropagation();
-  
   var journalDate = $("#journalDate").val();
   var particulars = $("#particulars").val();
   var dr = $("#dr").val();
   var cr = $("#cr").val();
   var desc = $("#desc").val();
-  $.ajax({
-    url: '../backend/journalize.php',
-    type: 'POST',
-    data: {journalDate: journalDate,particulars: particulars,dr: dr,cr: cr,desc: desc},
-
-  }).done(function(data) {
-    alert("completed")
-    console.log(data);
-
-    var newRowContent = `<tr id="journalize${accNumber}">
+  debitotal += parseFloat(dr);
+  credittotal += parseFloat(cr);
+  journal.push({journalDate: journalDate,particulars: particulars,dr: dr,cr: cr,desc: desc});
+  
+     var newRowContent = `<tr id="journalize${accNumber}">
     <td>${journalDate}</td><td>${particulars}</td><td>${dr}</td>
     <td>${cr}</td><td>${desc}</td>
     </tr>`;
@@ -317,15 +299,50 @@ $("#InsertJourn").click(function(e){
    $("#dr").val('');
    $("#cr").val('');
    $("#desc").val('');
-  })
-  .fail(function(data) {
-    console.log(data);
-  })
-  .always(function(data) {
-    console.log(data);
-  });
-  
+
 });
+
+
+function save(){
+
+  if (Object.size(journal) < 1) {
+    alert("Journal is empty");
+  }
+
+  else{
+
+    if (debitotal != credittotal) {
+
+      alert("Journal is not balanced");
+
+    }
+
+    else{
+      journal = JSON.stringify(journal);
+      console.log(journal);
+    }
+
+  }
+  
+  // $.ajax({
+  //   url: '../backend/journalize.php',
+  //   type: 'POST',
+  //   data: {journalDate: journalDate,particulars: particulars,dr: dr,cr: cr,desc: desc},
+
+  // }).done(function(data) {
+  //   alert("completed")
+  //   console.log(data);
+
+ 
+  // })
+  // .fail(function(data) {
+  //   console.log(data);
+  // })
+  // .always(function(data) {
+  //   console.log(data);
+  // });
+  
+}
 
 </script>
 
