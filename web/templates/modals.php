@@ -14,7 +14,7 @@
 
          <div class="form-group">
   <label for="usr">Account Number:</label>
-  <input type="text" required class="form-control" onemptied="check()" oninput="check()" id="accNumber">
+  <input type="number" required class="form-control" onemptied="check()" oninput="check()" id="accNumber">
 </div>
 
         <div class="form-group">
@@ -86,7 +86,7 @@ $("#InsertAcc").click(function(e){
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
       var response = this.responseText;
-      
+      console.log(response);
       if (this.status == 200) {
         chartAjax();
       }
