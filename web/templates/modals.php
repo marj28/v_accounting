@@ -318,29 +318,29 @@ function save(){
     }
 
     else{
-      journal = JSON.stringify(journal);
-      console.log(journal);
+    $.ajax({
+    url: '../backend/journalize.php',
+    type: 'POST',
+    data: {journal: journal},
+
+  }).done(function(data) {
+    alert("completed")
+    console.log(data);
+
+ 
+  })
+  .fail(function(data) {
+    console.log(data);
+  })
+  .always(function(data) {
+    console.log(data);
+  });
+      
     }
 
   }
   
-  // $.ajax({
-  //   url: '../backend/journalize.php',
-  //   type: 'POST',
-  //   data: {journalDate: journalDate,particulars: particulars,dr: dr,cr: cr,desc: desc},
-
-  // }).done(function(data) {
-  //   alert("completed")
-  //   console.log(data);
-
  
-  // })
-  // .fail(function(data) {
-  //   console.log(data);
-  // })
-  // .always(function(data) {
-  //   console.log(data);
-  // });
   
 }
 
@@ -777,3 +777,92 @@ function editaccount(){
 
 
 </script>
+
+
+
+<!-- The Modal -->
+<div class="modal" id="incomestatement">
+  <div class="modal-document">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+<div class="modal-header">
+  <h4 class="modal-title">Income Statement</h4>
+<button type="button" class="close" data-dismiss="modal">&times;</button>
+</div>
+
+      <!-- Modal body -->
+<div class="modal-body">
+
+<div class="row">
+<div class="col-md-2">
+  <div class="form-group">
+  <label for="usr">Start Date</label>
+  <input type="date" required class="form-control" onemptied="checkIncomeStatement1()" oninput="checkIncomeStatement1()"  
+  id="isstartDate1">
+</div>
+
+  <div class="form-group">
+  <label for="usr">End Date</label>
+  <input type="date" required class="form-control" onemptied="checkIncomeStatement1()" oninput="checkIncomeStatement1()"  
+  id="isendDate1">
+</div>
+
+<div class="form-group">
+<input type="submit" class="btn btn-primary" value="View" name="incomego" id="incomego">
+
+</div>
+</div>
+
+<div class="col-md-10" style="max-height: 500px; overflow-y: scroll;">
+  <h4 style="position: sticky;">Income Statement Generated</h4>
+  <div class="table-responsive" id="incomeStatementContainer1">
+
+
+</div>
+</div>
+<script>
+  function checkIncomeStatement1() {
+    var startDate = $("#isstartDate1").val();
+    var endDate = $("#isendDate1").val();
+
+
+    if (startDate && endDate) {
+      $("#incomego").removeAttr("disabled");
+    }
+    else{
+      $("#incomego").attr("disabled", "disabled");
+    }
+  }
+
+  $("#incomego").click(function(e){
+
+  e.stopPropagation();
+  var startDate = $("#isstartDate").val();
+  var endDate = $("#isendDate").val();
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      var response = this.responseText;
+      console.log(response);
+     $("#incomeStatementContainer1").html(response);
+    }
+  };
+  xhttp.open("GET", "../backend/incomestatement.php?startDate="+startDate+"&endDate="+endDate, true);
+  xhttp.send();
+});
+
+</script>
+ 
+
+</div>
+</div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>

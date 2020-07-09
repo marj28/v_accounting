@@ -57,6 +57,13 @@
               <p>Balance Sheet</p>
             </a>
           </li>
+
+            <li>
+            <a href="javascript:void(0)" id="hatdog"  data-toggle="modal" data-target="#incomestatement">
+              <i class="now-ui-icons design_bullet-list-67"></i>
+              <p>Income Statement</p>
+            </a>
+          </li>
         
         </ul>
       </div>

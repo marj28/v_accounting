@@ -2,19 +2,29 @@
 require_once 'connection.php';
 try {
 
-	$journalDate = $_POST['journalDate'];
-	$particulars = $_POST['particulars'];
-	$dr = $_POST['dr'];
-	$cr = $_POST['cr'];
-	$desc = $_POST['desc'];
-  $sql = "INSERT INTO  
+	$journal = $_POST['journal'];
+ 
+  $sqlf = [];
+  
+foreach ($journal as  $value) {
+    $journalDate = $value['journalDate'];
+    $particulars = $value['particulars'];
+    $dr = $value['dr'];
+    $cr = $value['cr'];
+    $desc = $value['desc'];
+
+    array_push($sqlf, "('$journalDate','$particulars','$dr','$cr','$desc')");
+}
+
+$sqlf = join(",",$sqlf);
+
+$sql = "INSERT INTO  
   journal ( transaction_date ,  account_number ,  debits ,  credits ,  description )
-  VALUES ('$journalDate','$particulars','$dr','$cr','$desc')";
-  // $statement = connect()->prepare($query);
-  // $statement->execute();
-  connect()->exec($sql);
+  VALUES ".$sqlf. ";";
+   connect()->exec($sql);
+
   http_response_code(200);
-  echo $sql;
+  echo "Added Succesfully.";
 } catch(PDOException $e) {
 http_response_code(500);
   echo $sql . "<br>" . $e->getMessage();
