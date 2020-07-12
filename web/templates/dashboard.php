@@ -178,33 +178,6 @@ $result = $stmt->fetchAll();
                         </td>
                       </tr>
                     <?php endforeach ?>
-                    <script>
-
-function deleteAccount(id){
-  var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
-  if (this.readyState == 4 && this.status == 200) {
-  var response = this.responseText;
-  console.log(response);
-  $("#chart"+id).hide('slow', function() {});
-  }
-};
-  xhttp.open("GET", "../backend/delete.php?number="+id+"&for=chartofaccounts", true);
-  xhttp.send();
-}
-
-
-function editchart(a,b,c,d){
-
-    $("#accNumber1").val(a);
-    $("#accName1").val(b);
-    $("#accType1").val(c);
-    $("#accDesc1").val(d);
-}
-
-
-
-                    </script>
                     </tbody>
                   </table>
                 </div>
@@ -230,6 +203,7 @@ function editchart(a,b,c,d){
   <!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="../static/assets/js/now-ui-dashboard.min.js?v=1.5.0" type="text/javascript"></script><!-- Now Ui Dashboard DEMO methods, don't include it in your project! -->
   <script src="../static/assets/demo/demo.js"></script>
+  <script type="../static/backend/main.js"></script>
 
 </body>
 <?php require_once 'modals.php'; ?>

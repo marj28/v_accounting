@@ -56,95 +56,6 @@
   </div>
 </div>
 
-<script>
-  
-  $(document).ready(function() {
-      $("#InsertAcc").attr("disabled", "disabled");
-      $("#InsertJourn").attr("disabled", "disabled");
-      $("#selectLedger").attr("disabled", "disabled");
-      $("#updateacc").attr("disabled", "disabled");
-  });
-
-  function check() {
-    var accNumber = $("#accNumber").val();
-    var accName = $("#accName").val();
-    var accType = $("#accType").val();
-    var accDesc = $("#accDesc").val();
-    if (accName != "" && accNumber != "" && accDesc != "" && accType != "") {
-      $("#InsertAcc").removeAttr("disabled");
-    }
-    else{
-      $("#InsertAcc").attr("disabled", "disabled");
-    }
-  }
-
-$("#InsertAcc").click(function(e){
-  e.stopPropagation();
-  var accNumber = $("#accNumber").val();
-  var accName = $("#accName").val();
-  var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-      var response = this.responseText;
-      if (this.status == 200) {
-        chartAjax();
-      }
-    }
-
-    if (this.status == 403) {
-      alert("Account Already Exist");
-    }
-    
-  };
-  xhttp.open("GET", "../backend/validation.php?number="+accNumber+"&accName="+accName, true);
-  xhttp.send();
-});
-
-function chartAjax(){
-
-    var accNumber = $("#accNumber").val();
-    var accName = $("#accName").val();
-    var accType = $("#accType").val();
-    var accDesc = $("#accDesc").val();
-
-  $.ajax({
-    url: '../backend/insert.php',
-    type: 'POST',
-    data: {accNumber: accNumber,accName: accName,accType: accType,accDesc: accDesc},
-  }).done(function(data) {
-    console.log(data);
-
-    var newRowContent = `<tr id="chart${accNumber}">
-    <td>${accNumber}</td><td>${accName}</td><td>${accType}</td>
-    <td class="text-right">${accDesc}</td>
-    <td class="text-center">
-    <button class="btn btn-danger" 
-    onclick="deleteAccount(${accNumber})">Delete
-    </button>
-    <button class="btn btn-success" 
-    onclick="edit(${accNumber})">Edit
-    </button>
-    </td>
-    </tr>`;
-
-    $('#chartofaccountstable > tbody:last').append(newRowContent);
-    alert(data);
-   $("#accNumber").val('');
-   $("#accName").val('');
-    $("#accType").val('');
-   $("#accDesc").val('');
-   $("#InsertAcc").attr("disabled", "disabled");
-  })
-  .fail(function(data) {
-    console.log(data);
-    alert("Error, Please check the console for more details");
-  })
-  .always(function() {
-    console.log("complete");
-  });
-  
-}
-</script>
 
 <?php 
 require_once '../backend/connection.php';
@@ -250,101 +161,6 @@ $chartofaccounts = $stmt->fetchAll();
 </div>
 
 
-<script>
-var journal = [];
-var debitotal = 0;
-var credittotal = 0;
-function checkjournalInput(){
-  var journalDate = $("#journalDate").val();
-  var particulars = $("#particulars").val();
-  var dr = $("#dr").val();
-  var cr = $("#cr").val();
-  var desc = $("#desc").val();
-
-if (journalDate && desc  && cr  && dr  && particulars ) {
-      $("#InsertJourn").removeAttr("disabled");
-    }
-    else{
-      $("#InsertJourn").attr("disabled", "disabled");
-    }
-}
-
-Object.size = function(obj) {
-    var size = 0, key;
-    for (key in obj) {
-        if (obj.hasOwnProperty(key)) size++;
-    }
-    return size;
-};
-
-$("#InsertJourn").click(function(e){
-
-  e.stopPropagation();
-  var journalDate = $("#journalDate").val();
-  var particulars = $("#particulars").val();
-  var dr = $("#dr").val();
-  var cr = $("#cr").val();
-  var desc = $("#desc").val();
-  debitotal += parseFloat(dr);
-  credittotal += parseFloat(cr);
-  journal.push({journalDate: journalDate,particulars: particulars,dr: dr,cr: cr,desc: desc});
-  
-     var newRowContent = `<tr id="journalize${accNumber}">
-    <td>${journalDate}</td><td>${particulars}</td><td>${dr}</td>
-    <td>${cr}</td><td>${desc}</td>
-    </tr>`;
-   $('#journalizing > tbody:last').append(newRowContent);
-   $("#journalDate").val('');
-   $("#particulars").val('');
-   $("#dr").val('');
-   $("#cr").val('');
-   $("#desc").val('');
-
-});
-
-
-function save(){
-
-  if (Object.size(journal) < 1) {
-    alert("Journal is empty");
-  }
-
-  else{
-
-    if (debitotal != credittotal) {
-
-      alert("Journal is not balanced");
-
-    }
-
-    else{
-    $.ajax({
-    url: '../backend/journalize.php',
-    type: 'POST',
-    data: {journal: journal},
-
-  }).done(function(data) {
-    alert("completed")
-    console.log(data);
-
- 
-  })
-  .fail(function(data) {
-    console.log(data);
-  })
-  .always(function(data) {
-    console.log(data);
-  });
-      
-    }
-
-  }
-  
- 
-  
-}
-
-</script>
 
 
 <!-- The Modal -->
@@ -412,58 +228,6 @@ function save(){
 
 
     </tbody>
-
-    <script>
-  function checkLedgerInput() {
-    var startDate = $("#startDate").val();
-    var endDate = $("#endDate").val();
-    var ledgePart = $("#ledgePart").val();
-
-    if (ledgePart && startDate && endDate) {
-      $("#selectLedger").removeAttr("disabled");
-    }
-    else{
-      $("#selectLedger").attr("disabled", "disabled");
-    }
-  }
-
-
-  $("#selectLedger").click(function(e){
-    e.stopPropagation();
-
-  var startDate = $("#startDate").val();
-  var endDate = $("#endDate").val();
-  var ledgePart = $("#ledgePart").val();
-    $.ajax({
-      url: '../backend/selecteLedger.php',
-      type: 'GET',
-      data: {number: ledgePart,startDate: startDate,endDate: endDate},
-    })
-    .done(function(data) {
-      $("#ledgercontainer").html(data);
-      console.log(data);
-    })
-    .fail(function(data) {
-      console.log(data);
-    })
-    .always(function(data) {
-      console.log(data);
-    });
-    
-
-
-  // var xhttp = new XMLHttpRequest();
-  // xhttp.onreadystatechange = function() {
-  //   if (this.readyState == 4 && this.status == 200) {
-  //     var response = this.responseText;
-      
-  //         }
-  // };
-  // xhttp.open("GET", "../backend/selecteLedger.php?number="+ledgePart+"&startDate="+startDate+"&endDate="+endDate, true);
-  // xhttp.send();
-});
-
-    </script>
   </table>
 </div>
 </div>
@@ -535,35 +299,7 @@ function save(){
     </tbody>
 
 <script>
-  function checkTrialBalance() {
-    var startDate = $("#trstartDate").val();
-    var endDate = $("#trendDate").val();
-
-
-    if (startDate && endDate) {
-      $("#trialBalanceMe").removeAttr("disabled");
-    }
-    else{
-      $("#trialBalanceMe").attr("disabled", "disabled");
-    }
-  }
-
-
-  $("#trialBalanceMe").click(function(e){
-  e.stopPropagation();
-  var startDate = $("#trstartDate").val();
-  var endDate = $("#trendDate").val();
-  var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-      var response = this.responseText;
-    $("#trialBalanceContainer").html(response);
-    }
-  };
-  xhttp.open("GET", "../backend/trialbalance.php?startDate="+startDate+"&endDate="+endDate, true);
-  xhttp.send();
-});
-
+  
 </script>
   </table>
 </div>
@@ -623,37 +359,7 @@ function save(){
   <h4 style="position: sticky;">Balance Sheet Generated</h4>
   <div class="table-responsive" id="incomeStatementContainer">
 
-<script>
-  function checkIncomeStatement() {
-    var startDate = $("#isstartDate").val();
-    var endDate = $("#isendDate").val();
 
-
-    if (startDate && endDate) {
-      $("#incomeStatementMe").removeAttr("disabled");
-    }
-    else{
-      $("#incomeStatementMe").attr("disabled", "disabled");
-    }
-  }
-
-  $("#incomeStatementMe").click(function(e){
-  e.stopPropagation();
-  var startDate = $("#isstartDate").val();
-  var endDate = $("#isendDate").val();
-  var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-      var response = this.responseText;
-    $("#incomeStatementContainer").html(response);
-    }
-  };
-  xhttp.open("GET", "../backend/balancesheet1.php?startDate="+startDate+"&endDate="+endDate, true);
-  xhttp.send();
-});
-
-</script>
- 
 </div>
 </div>
 
@@ -729,57 +435,6 @@ function save(){
   </div>
 </div>
 
-<script>
-
-  function checker() {
-    var accNumber = $("#accNumber1").val();
-    var accName = $("#accName1").val();
-    var accType = $("#accType1").val();
-    var accDesc = $("#accDesc1").val();
-    if (accName != "" && accNumber != "" && accDesc != "" && accType != "") {
-      $("#updateacc").removeAttr("disabled");
-    }
-    else{
-      $("#updateacc").attr("disabled", "disabled");
-    }
-  }
-
-
-  $("#updateacc").click(function(e){
-
-        editaccount();
-
-});
-
-
-function editaccount(){
-    var accNumber1 = $("#accNumber1").val();
-    var accName1 = $("#accName1").val();
-    var accType1 = $("#accType1").val();
-    var accDesc1 = $("#accDesc1").val();
-  $.ajax({
-    url: '../backend/editaccount.php',
-    type: 'POST',
-    data: {accNumber: accNumber1,accName: accName1,accType: accType1,accDesc: accDesc1},
-  })
-  .done(function(data) {
-   alert(data);
-  })
-  .fail(function(data) {
-    console.log(data);
-    alert("Error, Please check the console for more details");
-  })
-  .always(function(data) {
-    console.log(data);
-  });
-  
-}  
-
-
-</script>
-
-
-
 <!-- The Modal -->
 <div class="modal" id="incomestatement">
   <div class="modal-document">
@@ -821,38 +476,7 @@ function editaccount(){
 
 </div>
 </div>
-<script>
-  function checkIncomeStatement1() {
-    var startDate = $("#isstartDate1").val();
-    var endDate = $("#isendDate1").val();
 
-
-    if (startDate && endDate) {
-      $("#incomego").removeAttr("disabled");
-    }
-    else{
-      $("#incomego").attr("disabled", "disabled");
-    }
-  }
-
-  $("#incomego").click(function(e){
-
-  e.stopPropagation();
-  var startDate = $("#isstartDate").val();
-  var endDate = $("#isendDate").val();
-  var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-      var response = this.responseText;
-      console.log(response);
-     $("#incomeStatementContainer1").html(response);
-    }
-  };
-  xhttp.open("GET", "../backend/incomestatement.php?startDate="+startDate+"&endDate="+endDate, true);
-  xhttp.send();
-});
-
-</script>
  
 
 </div>
