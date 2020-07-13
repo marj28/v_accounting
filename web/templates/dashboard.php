@@ -3,6 +3,7 @@
 <html lang="en">
 <head>
   <?php require_once 'header.php'; ?>
+
   <title>Home</title>
 </head>
 <body class="">
@@ -203,8 +204,8 @@ $result = $stmt->fetchAll();
   <!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="../static/assets/js/now-ui-dashboard.min.js?v=1.5.0" type="text/javascript"></script><!-- Now Ui Dashboard DEMO methods, don't include it in your project! -->
   <script src="../static/assets/demo/demo.js"></script>
-  <script type="../static/backend/main.js"></script>
 
+    <script src="../static/backend/main.js"></script>
 </body>
 <?php require_once 'modals.php'; ?>
 </html>
