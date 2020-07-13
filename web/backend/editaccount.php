@@ -11,7 +11,7 @@ accountnumber = '$accNumber',
 accountname = '$accName',
 accounttype = '$accType',
 accountdescription = '$accDesc'
-WHERE accountnumber = '$accNumber';";
+WHERE accountnumber = '$accNumber'  OR accountname = '$accName';;";
 
 connect()->exec($sql);
   http_response_code(200);
