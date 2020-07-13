@@ -59,7 +59,7 @@ $expenses = $stmt->fetchAll();
 <?php $incomecr = 0.00; $expensedr = 0.00; ?>
 	<tr>
 		<td><h3><b>Income</b></h3></td>
-		<td><?php print_r($_GET) ?></td>
+		<td></td>
 		<td></td>
 	</tr>
 <?php foreach ($income as  $value): ?>
