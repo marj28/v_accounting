@@ -59,7 +59,7 @@ $expenses = $stmt->fetchAll();
 <?php $incomecr = 0.00; $expensedr = 0.00; ?>
 	<tr>
 		<td><h3><b>Income</b></h3></td>
-		<td></td>
+		<td><?php print_r($_GET) ?></td>
 		<td></td>
 	</tr>
 <?php foreach ($income as  $value): ?>
@@ -96,6 +96,7 @@ $expenses = $stmt->fetchAll();
 	</tr>
 
 	<?php foreach ($expenses as $value): ?>
+
 		<?php $expensedr = $expensedr + ($value['debits'] - $value['credits']); ?>
 
 	<tr class="text-center">
@@ -114,7 +115,11 @@ $expenses = $stmt->fetchAll();
 		<tr class="text-center">
 		<td nowrap>Amount:</td>
 		<td nowrap></td>
-		<td nowrap><?php echo $value['debits']; ?></td>
+		<td nowrap><?php if ($value['credits'] > 0): ?>
+			(<?php echo $value['credits']; ?>)
+			<?php else: ?>
+				<?php echo $value['debits']; ?>
+		<?php endif ?></td>
 	</tr>
 
 	<?php endforeach ?>
