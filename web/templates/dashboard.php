@@ -190,6 +190,7 @@ $result = $stmt->fetchAll();
     
     </div>
   </div>
+  <?php require_once 'modals.php'; ?>
   <!--   Core JS Files   -->
   <script src="../static/assets/js/core/jquery.min.js"></script>
   <script src="../static/assets/js/core/popper.min.js"></script>
@@ -207,5 +208,5 @@ $result = $stmt->fetchAll();
 
     <script src="../static/backend/main.js"></script>
 </body>
-<?php require_once 'modals.php'; ?>
+
 </html>
